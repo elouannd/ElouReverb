@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="Cj3N54" name="ElouReverb" projectType="audioplug" addUsingNamespaceToJuceHeader="0"
               jucerFormatVersion="1" version="1.0" companyName="Elouann" companyCopyright="Elouann"
-              companyEmail="elouann.dom@gmail.com" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST,buildVST3"
+              companyEmail="elouann.dom@gmail.com" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
               pluginAAXCategory="8">
   <MAINGROUP id="qkruy1" name="ElouReverb">
     <GROUP id="{B5CFEDBA-1D4A-DD2E-01AD-4E0270CF75E9}" name="Source">
