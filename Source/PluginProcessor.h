@@ -64,6 +64,9 @@ public:
     static void logMessage(const juce::String& message);
     
 private:
+    // This should be the ONLY declaration of this function:
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    
     juce::Reverb reverb;
     juce::Reverb::Parameters reverbParams;
     
@@ -91,9 +94,6 @@ private:
     // Helper functions
     float applySaturation(float sample, float amount);
     void applyPredelay(juce::AudioBuffer<float>& buffer, float delayTimeMs);
-    
-    // Parameter creation function
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ElouReverbAudioProcessor)

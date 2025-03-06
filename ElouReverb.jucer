@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="Cj3N54" name="ElouReverb" projectType="audioplug" addUsingNamespaceToJuceHeader="0"
               jucerFormatVersion="1" version="1.0" companyName="Elouann" companyCopyright="Elouann"
-              companyEmail="elouann.dom@gmail.com" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST,buildVST3"
+              companyEmail="elouann.dom@gmail.com" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
               pluginAAXCategory="8">
   <MAINGROUP id="qkruy1" name="ElouReverb">
     <GROUP id="{B5CFEDBA-1D4A-DD2E-01AD-4E0270CF75E9}" name="Source">
@@ -10,6 +10,7 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="lZ4nB2" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="hQj5bR" name="knob.png" compile="0" resource="1" file="knob.png"/>
       <FILE id="irG0DB" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="T2XtBq" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>

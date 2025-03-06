@@ -143,7 +143,13 @@ bool ElouReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 void ElouReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    
+    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    // Clear any output channels that don't contain input data
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
     // Get the decay time in seconds
     float decayTime = roomSizeParameter->load();
     
@@ -280,42 +286,52 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout ElouReverbAudioProcessor::createParameterLayout()
 {
-    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
-    // Room Size as decay time (0.1s to 30.0s)
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID("roomSize", 1),
-        "Decay Time",
-        juce::NormalisableRange<float>(0.1f, 30.0f, 0.01f, 0.5f), // Max 30s
-        2.0f)); // Default to 2 seconds
-
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID("damping", 1),
-        "Damping",
-        0.0f,
-        1.0f,
-        0.5f));
-
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID("mix", 1),
-        "Mix (Wet/Dry)", // Use English only for parameter IDs
-        0.0f,
-        1.0f,
-        0.33f));
+    // Room Size parameter
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID("roomSize", 1),      // parameter ID with version hint
+        "Decay Time",                         // parameter name
+        0.1f,                                 // minimum value
+        25.0f,                                // maximum value (changed from 90.0f)
+        8.0f                                  // default value
+    ));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID("saturation", 1),
-        "Warmth", // Use English only for parameter IDs
-        0.0f,
-        0.5f, 
-        0.2f));
+    // Damping parameter
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID("damping", 1),       // parameter ID with version hint
+        "Damping",                            // parameter name
+        0.0f,                                 // minimum value
+        1.0f,                                 // maximum value
+        0.5f                                  // default value
+    ));
         
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID("pan", 1),
-        "Pan",
-        -1.0f,
-        1.0f,
-        0.0f));
+    // Mix parameter
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID("mix", 1),           // parameter ID with version hint
+        "Mix (Wet/Dry)",                      // parameter name
+        0.0f,                                 // minimum value
+        1.0f,                                 // maximum value
+        0.33f                                 // default value
+    ));
+        
+    // Saturation parameter
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID("saturation", 1),    // parameter ID with version hint
+        "Warmth",                             // parameter name
+        0.0f,                                 // minimum value
+        0.5f,                                 // maximum value
+        0.2f                                  // default value
+    ));
+        
+    // Pan parameter
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID("pan", 1),           // parameter ID with version hint
+        "Pan",                                // parameter name
+        -1.0f,                                // minimum value
+        1.0f,                                 // maximum value
+        0.0f                                  // default value
+    ));
     
-    return { params.begin(), params.end() };
+    return layout;
 }

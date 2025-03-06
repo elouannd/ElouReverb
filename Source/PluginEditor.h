@@ -11,52 +11,45 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-// Add this before the ElouReverbAudioProcessorEditor class
+// Update the KnobLookAndFeel class with analog console knob design:
 
 class KnobLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    void drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
+    KnobLookAndFeel()
+    {
+        // Simple text box styling
+        setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
+        setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
+        setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x11ffffff));
+    }
+    
+    void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
                           float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override
     {
-        // Define colors
-        juce::Colour knobColor = juce::Colour(60, 60, 60);
-        juce::Colour highlightColor = juce::Colour(200, 100, 20);
+        // Basic dimensions
+        const float radius = juce::jmin(width, height) * 0.38f;
+        const float centerX = x + width * 0.5f;
+        const float centerY = y + height * 0.5f;
+        const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
         
-        // Define bounds
-        auto bounds = juce::Rectangle<int>(x, y, width, height).toFloat().reduced(10);
-        auto radius = juce::jmin(bounds.getWidth(), bounds.getHeight()) / 2.0f;
-        auto centerX = bounds.getCentreX();
-        auto centerY = bounds.getCentreY();
-        auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+        // Draw simple white circle with subtle shadow for depth
+        g.setColour(juce::Colours::black.withAlpha(0.2f));
+        g.fillEllipse(centerX - radius + 2, centerY - radius + 2, radius * 2, radius * 2);
         
-        // Draw knob body
-        g.setColour(knobColor);
+        // Draw white circle
+        g.setColour(juce::Colours::white);
         g.fillEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2);
         
-        // Draw metal ring
-        g.setColour(juce::Colours::lightgrey);
-        float ringThickness = 2.0f;
-        g.drawEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2, ringThickness);
+        // Draw thin black marker line
+        g.setColour(juce::Colours::black);
+        const float lineThickness = radius * 0.06f; // Thin line
+        const float lineLength = radius * 0.9f;     // Almost to the edge
         
-        // Draw indicator line
-        g.setColour(juce::Colours::white);
+        juce::Path indicator;
+        indicator.addRectangle(-lineThickness * 0.5f, -lineLength, lineThickness, lineLength);
         
-        juce::Path p;
-        auto pointerLength = radius * 0.65f;
-        auto pointerThickness = 4.0f;
-        
-        p.addRoundedRectangle(-pointerThickness * 0.5f, -radius * 0.9f, 
-                             pointerThickness, pointerLength, 1.0f);
-        
-        p.applyTransform(juce::AffineTransform::rotation(toAngle)
-                         .translated(centerX, centerY));
-        
-        g.fillPath(p);
-        
-        // Add a highlight reflection
-        g.setColour(juce::Colours::white.withAlpha(0.3f));
-        g.fillEllipse(centerX - radius * 0.4f, centerY - radius * 0.7f, radius * 0.3f, radius * 0.3f);
+        g.fillPath(indicator, juce::AffineTransform::rotation(angle).translated(centerX, centerY));
     }
 };
 
