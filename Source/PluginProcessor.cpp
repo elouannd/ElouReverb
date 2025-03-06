@@ -293,7 +293,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout ElouReverbAudioProcessor::cr
         juce::ParameterID("roomSize", 1),      // parameter ID with version hint
         "Decay Time",                         // parameter name
         0.1f,                                 // minimum value
-        90.0f,                                // maximum value
+        25.0f,                                // maximum value (changed from 90.0f)
         8.0f                                  // default value
     ));
     

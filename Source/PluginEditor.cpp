@@ -16,7 +16,7 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     // Set up Room Size slider
     roomSizeSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    roomSizeSlider.setRange(0.1f, 90.0f, 0.01f); // Reduced from 100 seconds
+    roomSizeSlider.setRange(0.1f, 25.0f, 0.01f); // Changed from 90.0f to 25.0f
     roomSizeSlider.setSkewFactorFromMidPoint(8.0f); // Make it logarithmic after 8 seconds
     roomSizeSlider.setTextValueSuffix(" s");
     roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
@@ -30,9 +30,9 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     // Custom text display for very long decay times
     roomSizeSlider.onValueChange = [this]() {
         float value = roomSizeSlider.getValue();
-        if (value >= 85.0f) {
+        if (value >= 20.0f) {
             roomSizeSlider.setTextValueSuffix("++ s"); // Use ASCII only
-        } else if (value > 30.0f) {
+        } else if (value > 15.0f) {
             roomSizeSlider.setTextValueSuffix("+ s");
         } else {
             roomSizeSlider.setTextValueSuffix(" s");
@@ -123,23 +123,43 @@ ElouReverbAudioProcessorEditor::~ElouReverbAudioProcessorEditor()
 }
 
 //==============================================================================
-void ElouReverbAudioProcessorEditor::paint (juce::Graphics& g)
+void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    // Background
-    g.fillAll (juce::Colour(30, 30, 34));
+    // Background with subtle gradient
+    juce::ColourGradient backgroundGradient(
+        juce::Colour(30, 30, 35), 0, 0,  // Dark at top
+        juce::Colour(20, 20, 25), 0, getHeight(),  // Darker at bottom
+        false
+    );
+    g.setGradientFill(backgroundGradient);
+    g.fillAll();
     
-    // Title
-    g.setColour(juce::Colours::orange);
+    // Title with gradient fill and shadow
+    juce::Rectangle<float> titleArea(0.0f, 10.0f, static_cast<float>(getWidth()), 40.0f);
+    
+    // Title shadow
+    g.setColour(juce::Colours::black.withAlpha(0.5f));
     g.setFont(juce::Font(28.0f, juce::Font::bold));
-    g.drawText("ElouReverb", 0, 10, getWidth(), 40, 
-               juce::Justification::centred, true);
-               
-    // Version and copyright - using standard ASCII
+    g.drawText("ElouReverb", titleArea.translated(2.0f, 2.0f), juce::Justification::centred, false);
+    
+    // Title with gradient
+    juce::ColourGradient titleGradient(
+        juce::Colour(255, 165, 0),       // Orange
+        titleArea.getX(), titleArea.getY(),
+        juce::Colour(255, 140, 0),       // Darker orange
+        titleArea.getX(), titleArea.getBottom(),
+        false
+    );
+    g.setGradientFill(titleGradient);
+    g.setFont(juce::Font(28.0f, juce::Font::bold));
+    g.drawText("ElouReverb", titleArea, juce::Justification::centred, true);
+    
+    // Version and copyright with subtle styling
     g.setColour(juce::Colours::white.withAlpha(0.6f));
     g.setFont(juce::Font(12.0f));
     g.drawText("V1 - Elouann 2025", 
-               getWidth() - 200, getHeight() - 20, 190, 20, 
-               juce::Justification::right, true);
+              getWidth() - 200, getHeight() - 20, 190, 20, 
+              juce::Justification::right, true);
 }
 
 void ElouReverbAudioProcessorEditor::resized()
