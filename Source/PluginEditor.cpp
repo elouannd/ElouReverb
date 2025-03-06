@@ -13,19 +13,21 @@
 ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // Set up Room Size slider
-    roomSizeSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    roomSizeSlider.setRange(0.1f, 25.0f, 0.01f); // Changed from 90.0f to 25.0f
-    roomSizeSlider.setSkewFactorFromMidPoint(8.0f); // Make it logarithmic after 8 seconds
-    roomSizeSlider.setTextValueSuffix(" s");
-    roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
-    addAndMakeVisible(roomSizeSlider);
+    // Set up all sliders
+    setupSlider(roomSizeSlider, 0.1f, 25.0f, 0.01f, " s");
+    setupLabel(roomSizeLabel, "Temps");
     
-    roomSizeLabel.setText("Decay Time", juce::dontSendNotification);
-    roomSizeLabel.setJustificationType(juce::Justification::centred);
-    roomSizeLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    addAndMakeVisible(roomSizeLabel);
+    setupSlider(dampingSlider, 0.0f, 1.0f, 0.01f);
+    setupLabel(dampingLabel, "Etouffement");
+    
+    setupSlider(mixSlider, 0.0f, 1.0f, 0.01f);
+    setupLabel(mixLabel, "Mix (Sec/Mouille)");
+    
+    setupSlider(saturationSlider, 0.0f, 0.5f, 0.01f);
+    setupLabel(saturationLabel, "Warmth");
+    
+    setupSlider(panSlider, -1.0f, 1.0f, 0.01f);
+    setupLabel(panLabel, "Pan");
     
     // Custom text display for very long decay times
     roomSizeSlider.onValueChange = [this]() {
@@ -39,68 +41,7 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
         }
     };
     
-    // Apply look and feel to all sliders
-    dampingSlider.setLookAndFeel(&knobLookAndFeel);
-    mixSlider.setLookAndFeel(&knobLookAndFeel);
-    saturationSlider.setLookAndFeel(&knobLookAndFeel);
-    panSlider.setLookAndFeel(&knobLookAndFeel);
-    
-    // Make window resizable
-    setResizable(true, true);
-    setResizeLimits(600, 400, 1200, 800);
-    
-    // Set the editor size
-    setSize (800, 500);
-    
-    // Damping Slider
-    dampingSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    dampingSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    dampingSlider.setRange(0.0f, 1.0f, 0.01f);
-    dampingSlider.setValue(0.5f);
-    addAndMakeVisible(dampingSlider);
-    
-    dampingLabel.setText("Damping", juce::dontSendNotification);
-    dampingLabel.setJustificationType(juce::Justification::centred);
-    dampingLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    addAndMakeVisible(dampingLabel);
-    
-    // Mix Slider (replacing Wet/Dry)
-    mixSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    mixSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    mixSlider.setRange(0.0f, 1.0f, 0.01f);
-    mixSlider.setValue(0.33f);
-    addAndMakeVisible(mixSlider);
-    
-    mixLabel.setText("Mix (Wet/Dry)", juce::dontSendNotification);
-    mixLabel.setJustificationType(juce::Justification::centred);
-    mixLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    addAndMakeVisible(mixLabel);
-
-    // Warmth Slider - now with range 0-0.5
-    saturationSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    saturationSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    saturationSlider.setRange(0.0f, 0.5f, 0.01f);
-    saturationSlider.setValue(0.2f);
-    addAndMakeVisible(saturationSlider);
-    
-    saturationLabel.setText("Warmth", juce::dontSendNotification);
-    saturationLabel.setJustificationType(juce::Justification::centred);
-    saturationLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    addAndMakeVisible(saturationLabel);
-    
-    // Pan Slider
-    panSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    panSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
-    panSlider.setRange(-1.0f, 1.0f, 0.01f);
-    panSlider.setValue(0.0f);
-    addAndMakeVisible(panSlider);
-    
-    panLabel.setText("Pan", juce::dontSendNotification);
-    panLabel.setJustificationType(juce::Justification::centred);
-    panLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    addAndMakeVisible(panLabel);
-
-    // Add value tree attachments
+    // Create attachments
     roomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         audioProcessor.apvts, "roomSize", roomSizeSlider);
     dampingAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -111,6 +52,13 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
         audioProcessor.apvts, "saturation", saturationSlider);
     panAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         audioProcessor.apvts, "pan", panSlider);
+    
+    // Make window resizable
+    setResizable(true, true);
+    setResizeLimits(600, 400, 1200, 800);
+    
+    // Set the editor size
+    setSize(800, 500);
 }
 
 ElouReverbAudioProcessorEditor::~ElouReverbAudioProcessorEditor()
@@ -122,44 +70,55 @@ ElouReverbAudioProcessorEditor::~ElouReverbAudioProcessorEditor()
     panSlider.setLookAndFeel(nullptr);
 }
 
+// Add these implementations after the constructor but before other functions
+
+void ElouReverbAudioProcessorEditor::setupSlider(juce::Slider& slider, float min, float max, float step, const char* suffix)
+{
+    slider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 90, 20);
+    slider.setRange(min, max, step);
+    
+    if (suffix && suffix[0] != '\0')
+        slider.setTextValueSuffix(suffix);
+        
+    slider.setLookAndFeel(&knobLookAndFeel);
+    addAndMakeVisible(slider);
+}
+
+void ElouReverbAudioProcessorEditor::setupLabel(juce::Label& label, const juce::String& text)
+{
+    label.setText(text, juce::dontSendNotification);
+    label.setJustificationType(juce::Justification::centred);
+    label.setFont(juce::Font(16.0f, juce::Font::bold));
+    label.setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(label);
+}
+
 //==============================================================================
+// Update the paint method for frosted glass effect:
+
 void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    // Background with subtle gradient
+    // Simple dark gradient background
     juce::ColourGradient backgroundGradient(
-        juce::Colour(30, 30, 35), 0, 0,  // Dark at top
-        juce::Colour(20, 20, 25), 0, getHeight(),  // Darker at bottom
+        juce::Colour(0xFF202020), 0, 0,
+        juce::Colour(0xFF101010), 0, getHeight(),
         false
     );
     g.setGradientFill(backgroundGradient);
     g.fillAll();
     
-    // Title with gradient fill and shadow
-    juce::Rectangle<float> titleArea(0.0f, 10.0f, static_cast<float>(getWidth()), 40.0f);
-    
-    // Title shadow
-    g.setColour(juce::Colours::black.withAlpha(0.5f));
+    // Draw title
+    g.setColour(juce::Colours::white);
     g.setFont(juce::Font(28.0f, juce::Font::bold));
-    g.drawText("ElouReverb", titleArea.translated(2.0f, 2.0f), juce::Justification::centred, false);
+    g.drawText("ElouReverb", getLocalBounds().removeFromTop(60), juce::Justification::centred, true);
     
-    // Title with gradient
-    juce::ColourGradient titleGradient(
-        juce::Colour(255, 165, 0),       // Orange
-        titleArea.getX(), titleArea.getY(),
-        juce::Colour(255, 140, 0),       // Darker orange
-        titleArea.getX(), titleArea.getBottom(),
-        false
-    );
-    g.setGradientFill(titleGradient);
-    g.setFont(juce::Font(28.0f, juce::Font::bold));
-    g.drawText("ElouReverb", titleArea, juce::Justification::centred, true);
-    
-    // Version and copyright with subtle styling
+    // Version info - updated to V2
     g.setColour(juce::Colours::white.withAlpha(0.6f));
     g.setFont(juce::Font(12.0f));
-    g.drawText("V1 - Elouann 2025", 
-              getWidth() - 200, getHeight() - 20, 190, 20, 
-              juce::Justification::right, true);
+    g.drawText("V2 - Elouann 2025", 
+              getWidth() - 200, getHeight() - 25, 
+              190, 20, juce::Justification::right, true);
 }
 
 void ElouReverbAudioProcessorEditor::resized()

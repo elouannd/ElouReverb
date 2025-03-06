@@ -11,62 +11,45 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-// Update the KnobLookAndFeel class:
+// Update the KnobLookAndFeel class with analog console knob design:
 
 class KnobLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
     KnobLookAndFeel()
     {
-        // Modern color palette
-        setColour(juce::Slider::thumbColourId, juce::Colour(255, 165, 0));       // Orange accent
-        setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(255, 165, 0).withAlpha(0.8f));
-        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(40, 40, 45));
+        // Simple text box styling
         setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
         setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
-        setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(50, 50, 55).withAlpha(0.6f));
+        setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x11ffffff));
     }
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
                           float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override
     {
-        // Calculate angles and sizes
-        const float radius = juce::jmin(width, height) * 0.4f;
+        // Basic dimensions
+        const float radius = juce::jmin(width, height) * 0.38f;
         const float centerX = x + width * 0.5f;
         const float centerY = y + height * 0.5f;
         const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
         
-        // Draw outer circle (knob body)
-        const float outerRadius = radius * 1.1f;
-        g.setColour(findColour(juce::Slider::rotarySliderOutlineColourId));
-        g.fillEllipse(centerX - outerRadius, centerY - outerRadius, outerRadius * 2, outerRadius * 2);
+        // Draw simple white circle with subtle shadow for depth
+        g.setColour(juce::Colours::black.withAlpha(0.2f));
+        g.fillEllipse(centerX - radius + 2, centerY - radius + 2, radius * 2, radius * 2);
         
-        // Draw inner gradient (knob face)
-        juce::ColourGradient gradient(
-            juce::Colour(70, 70, 75), centerX, centerY - radius * 0.4f,
-            juce::Colour(30, 30, 35), centerX, centerY + radius * 0.6f,
-            true
-        );
-        g.setGradientFill(gradient);
+        // Draw white circle
+        g.setColour(juce::Colours::white);
         g.fillEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2);
         
-        // Draw indicator line
-        g.setColour(findColour(juce::Slider::thumbColourId));
-        const float lineThickness = radius * 0.1f;
-        const float lineLength = radius * 0.8f;
+        // Draw thin black marker line
+        g.setColour(juce::Colours::black);
+        const float lineThickness = radius * 0.06f; // Thin line
+        const float lineLength = radius * 0.9f;     // Almost to the edge
         
         juce::Path indicator;
         indicator.addRectangle(-lineThickness * 0.5f, -lineLength, lineThickness, lineLength);
         
         g.fillPath(indicator, juce::AffineTransform::rotation(angle).translated(centerX, centerY));
-        
-        // Draw indicator dot
-        const float dotRadius = lineThickness;
-        const float dotX = centerX + lineLength * 0.6f * std::cos(angle - juce::MathConstants<float>::halfPi);
-        const float dotY = centerY + lineLength * 0.6f * std::sin(angle - juce::MathConstants<float>::halfPi);
-        
-        g.setColour(findColour(juce::Slider::thumbColourId));
-        g.fillEllipse(dotX - dotRadius, dotY - dotRadius, dotRadius * 2, dotRadius * 2);
     }
 };
 
