@@ -59,7 +59,7 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     dampingSlider.setValue(0.5f);
     addAndMakeVisible(dampingSlider);
     
-    dampingLabel.setText(juce::CharPointer_UTF8("Étouffement"), juce::dontSendNotification);
+    dampingLabel.setText("Damping", juce::dontSendNotification);
     dampingLabel.setJustificationType(juce::Justification::centred);
     dampingLabel.setFont(juce::Font(16.0f, juce::Font::bold));
     addAndMakeVisible(dampingLabel);
@@ -71,7 +71,7 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     mixSlider.setValue(0.33f);
     addAndMakeVisible(mixSlider);
     
-    mixLabel.setText(juce::CharPointer_UTF8("Mix (Mouillé/Sec)"), juce::dontSendNotification);
+    mixLabel.setText("Mix (Wet/Dry)", juce::dontSendNotification);
     mixLabel.setJustificationType(juce::Justification::centred);
     mixLabel.setFont(juce::Font(16.0f, juce::Font::bold));
     addAndMakeVisible(mixLabel);
@@ -83,7 +83,7 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     saturationSlider.setValue(0.2f);
     addAndMakeVisible(saturationSlider);
     
-    saturationLabel.setText(juce::CharPointer_UTF8("Chaleur"), juce::dontSendNotification);
+    saturationLabel.setText("Warmth", juce::dontSendNotification);
     saturationLabel.setJustificationType(juce::Justification::centred);
     saturationLabel.setFont(juce::Font(16.0f, juce::Font::bold));
     addAndMakeVisible(saturationLabel);
