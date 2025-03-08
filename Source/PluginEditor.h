@@ -18,45 +18,92 @@ class KnobLookAndFeel : public juce::LookAndFeel_V4
 public:
     KnobLookAndFeel()
     {
-        // Simple text box styling
+        // Style de la boîte de texte
         setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
         setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
         setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x11ffffff));
+        mainColour = juce::Colour(0xFFE67E22); // Default orange color
+    }
+    
+    void setMainColour(juce::Colour newColour) {
+        mainColour = newColour;
+    }
+    
+    juce::Colour getMainColour() const {
+        return mainColour;
     }
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
                           float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override
     {
-        // Basic dimensions
-        const float radius = juce::jmin(width, height) * 0.38f;
+        // Dimensions de base
+        float radius;
+        if (slider.getName() == "roomSize") {
+            radius = juce::jmin(width, height) * 0.45f; // Plus grand pour le decay
+        } else {
+            radius = juce::jmin(width, height) * 0.38f;
+        }
+        
         const float centerX = x + width * 0.5f;
         const float centerY = y + height * 0.5f;
+        
+        // Calculate proper angle based on start and end angles
         const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
         
-        // Draw simple white circle with subtle shadow for depth
-        g.setColour(juce::Colours::black.withAlpha(0.2f));
-        g.fillEllipse(centerX - radius + 2, centerY - radius + 2, radius * 2, radius * 2);
-        
-        // Draw white circle
-        g.setColour(juce::Colours::white);
+        // Corps principal du knob avec la couleur personnalisée
+        g.setColour(mainColour);
         g.fillEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2);
         
-        // Draw thin black marker line
-        g.setColour(juce::Colours::black);
-        const float lineThickness = radius * 0.06f; // Thin line
-        const float lineLength = radius * 0.9f;     // Almost to the edge
+        // Indicateur de position
+        const float indicatorLength = radius * 0.7f;
+        const float indicatorThickness = 2.5f;
         
         juce::Path indicator;
-        indicator.addRectangle(-lineThickness * 0.5f, -lineLength, lineThickness, lineLength);
+        indicator.addRectangle(-indicatorThickness * 0.5f, -indicatorLength, 
+                              indicatorThickness, indicatorLength);
         
+        // Indicateur en marron foncé
+        g.setColour(juce::Colour(0xFF2D1810));
         g.fillPath(indicator, juce::AffineTransform::rotation(angle).translated(centerX, centerY));
     }
+
+private:
+    juce::Colour mainColour;
+};
+
+class ColorButton : public juce::TextButton
+{
+public:
+    ColorButton(const juce::String& name, const juce::Colour& color) 
+        : juce::TextButton(name), buttonColor(color)
+    {
+        setSize(30, 20);
+    }
+
+    void paintButton(juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
+    {
+        auto bounds = getLocalBounds().toFloat().reduced(1.0f);
+        g.setColour(buttonColor);
+        g.fillRoundedRectangle(bounds, 4.0f);
+        
+        if (shouldDrawButtonAsHighlighted || shouldDrawButtonAsDown)
+        {
+            g.setColour(juce::Colours::white.withAlpha(0.3f));
+            g.fillRoundedRectangle(bounds, 4.0f);
+        }
+    }
+
+    juce::Colour getColour() const { return buttonColor; }
+
+private:
+    juce::Colour buttonColor;
 };
 
 //==============================================================================
 /**
 */
-class ElouReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
+class ElouReverbAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                     public juce::Button::Listener
 {
 public:
     ElouReverbAudioProcessorEditor (ElouReverbAudioProcessor&);
@@ -65,16 +112,13 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void buttonClicked(juce::Button* button) override;
 
 private:
-    // Add these method declarations
     void setupSlider(juce::Slider& slider, float min, float max, float step, const char* suffix = "");
-    // Update method declaration to accept juce::String
     void setupLabel(juce::Label& label, const juce::String& text);
     void createAttachments();
 
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     ElouReverbAudioProcessor& audioProcessor;
 
     KnobLookAndFeel knobLookAndFeel;
@@ -90,6 +134,9 @@ private:
     juce::Label mixLabel;    
     juce::Label saturationLabel;
     juce::Label panLabel;
+    
+    std::vector<std::unique_ptr<ColorButton>> colorButtons;
+    juce::Label colorLabel;
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> roomSizeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> dampingAttachment;

@@ -10,19 +10,19 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.Elouann.ElouReverb</string>
+    <string>com.Elouann.ElouReverbV3</string>
     <key>CFBundleName</key>
-    <string>ElouReverb</string>
+    <string>ElouReverbV3</string>
     <key>CFBundleDisplayName</key>
-    <string>ElouReverb</string>
+    <string>ElouReverbV3</string>
     <key>CFBundlePackageType</key>
     <string>BNDL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>3.0</string>
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>3.0</string>
     <key>NSHumanReadableCopyright</key>
     <string>Elouann</string>
     <key>NSHighResolutionCapable</key>
@@ -31,11 +31,11 @@
     <array>
       <dict>
         <key>name</key>
-        <string>Elouann: ElouReverb</string>
+        <string>Elouann: ElouReverbV3</string>
         <key>description</key>
-        <string>ElouReverb</string>
+        <string>ElouReverbV3</string>
         <key>factoryFunction</key>
-        <string>ElouReverbAUFactory</string>
+        <string>ElouReverbV3AUFactory</string>
         <key>manufacturer</key>
         <string>Manu</string>
         <key>type</key>
@@ -43,7 +43,7 @@
         <key>subtype</key>
         <string>Cj3n</string>
         <key>version</key>
-        <integer>65536</integer>
+        <integer>196608</integer>
         <key>resourceUsage</key>
         <dict>
           <key>network.client</key>

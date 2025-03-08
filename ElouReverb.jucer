@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Cj3N54" name="ElouReverb" projectType="audioplug" addUsingNamespaceToJuceHeader="0"
-              jucerFormatVersion="1" version="1.0" companyName="Elouann" companyCopyright="Elouann"
+<JUCERPROJECT id="Cj3N54" name="ElouReverbV3" projectType="audioplug" addUsingNamespaceToJuceHeader="0"
+              jucerFormatVersion="1" version="3.0" companyName="Elouann" companyCopyright="Elouann"
               companyEmail="elouann.dom@gmail.com" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
               pluginAAXCategory="8">
-  <MAINGROUP id="qkruy1" name="ElouReverb">
+  <MAINGROUP id="qkruy1" name="ElouReverbV3">
     <GROUP id="{B5CFEDBA-1D4A-DD2E-01AD-4E0270CF75E9}" name="Source">
       <FILE id="HRy5Y1" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
