@@ -18,7 +18,7 @@ class KnobLookAndFeel : public juce::LookAndFeel_V4
 public:
     KnobLookAndFeel()
     {
-        // Style de la boîte de texte
+        // Text box style
         setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
         setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
         setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(0x11ffffff));

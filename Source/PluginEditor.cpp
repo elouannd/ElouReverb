@@ -126,7 +126,7 @@ void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
     juce::Colour mainThemeColor = knobLookAndFeel.getMainColour();
     juce::Colour darkThemeColor = mainThemeColor.withBrightness(0.2f);
     
-    // Fond dégradé principal using the theme color
+    // Main gradient background using the theme color
     juce::ColourGradient backgroundGradient(
         darkThemeColor, 0, 0,  
         darkThemeColor.darker(0.7f), getWidth(), getHeight(),  
@@ -135,7 +135,7 @@ void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
     g.setGradientFill(backgroundGradient);
     g.fillAll();
     
-    // Titre du plugin avec style Valhalla
+    // Plugin title with Valhalla style
     g.setFont(juce::Font(36.0f, juce::Font::bold));
     
     // "Elou" in theme color
@@ -146,14 +146,14 @@ void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
     g.setColour(mainThemeColor.darker(0.3f));
     g.drawText("Reverb", 120, 20, 150, 40, juce::Justification::left, true);
     
-    // Version et crédit
+    // Version and credit
     g.setColour(juce::Colours::white.withAlpha(0.6f));
     g.setFont(juce::Font(12.0f));
     g.drawText("V3 - Elouann 2025", 
               getWidth() - 200, 25, 
               180, 20, juce::Justification::right, true);
               
-    // Dessiner les sections avec bordures using theme color
+    // Draw sections with borders using theme color
     auto drawSection = [&](juce::Rectangle<int> bounds, const juce::String& title) {
         g.setColour(mainThemeColor.withAlpha(0.3f));
         g.drawRoundedRectangle(bounds.toFloat(), 10.0f, 2.0f);
@@ -164,16 +164,16 @@ void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
                   juce::Justification::centred, true);
     };
     
-    // Sections principales
+    // Main sections
     juce::Rectangle<int> mainSection(50, 100, getWidth() - 100, getHeight() - 200);
-    drawSection(mainSection, "CONTRÔLES PRINCIPAUX");
+    drawSection(mainSection, "MAIN CONTROLS");
 }
 
 void ElouReverbAudioProcessorEditor::resized()
 {
     auto bounds = getLocalBounds();
     
-    // Espace pour l'en-tête
+    // Header space
     bounds.removeFromTop(80);
     
     // Space for color buttons at the bottom
@@ -193,23 +193,23 @@ void ElouReverbAudioProcessorEditor::resized()
                                  20);
     }
     
-    // Calcul des dimensions
+    // Calculate dimensions
     const int padding = 30;
     bounds.reduce(padding, padding);
     
-    // Section principale
+    // Main section
     auto mainSection = bounds;
     mainSection.reduce(20, 20);
     
-    // Taille des knobs standards
+    // Standard knob size
     const int knobSize = juce::jmin(mainSection.getWidth() / 6, mainSection.getHeight() / 3);
-    // Taille du knob de decay (25% plus grand)
+    // Decay knob size (25% larger)
     const int decayKnobSize = static_cast<int>(knobSize * 1.25f);
     
-    // Disposition des contrôles principaux
+    // Main controls layout
     auto topRow = mainSection.removeFromTop(mainSection.getHeight() / 2);
     
-    // Première rangée : Room Size, Damping, Mix
+    // First row: Room Size, Damping, Mix
     auto roomArea = topRow.removeFromLeft(topRow.getWidth() / 3);
     auto dampArea = topRow.removeFromLeft(topRow.getWidth() / 2);
     auto mixArea = topRow;
@@ -220,21 +220,21 @@ void ElouReverbAudioProcessorEditor::resized()
     dampingLabel.setBounds(dampArea.removeFromTop(labelHeight));
     mixLabel.setBounds(mixArea.removeFromTop(labelHeight));
     
-    // Knobs de la première rangée
+    // First row knobs
     roomSizeSlider.setBounds(roomArea.withSizeKeepingCentre(decayKnobSize, decayKnobSize));
     dampingSlider.setBounds(dampArea.withSizeKeepingCentre(knobSize, knobSize));
     mixSlider.setBounds(mixArea.withSizeKeepingCentre(knobSize, knobSize));
     
-    // Deuxième rangée : Saturation et Pan
+    // Second row: Saturation and Pan
     auto bottomRow = mainSection;
     auto saturationArea = bottomRow.removeFromLeft(bottomRow.getWidth() / 2);
     auto panArea = bottomRow;
     
-    // Labels de la deuxième rangée
+    // Second row labels
     saturationLabel.setBounds(saturationArea.removeFromTop(labelHeight));
     panLabel.setBounds(panArea.removeFromTop(labelHeight));
     
-    // Knobs de la deuxième rangée
+    // Second row knobs
     saturationSlider.setBounds(saturationArea.withSizeKeepingCentre(knobSize, knobSize));
     panSlider.setBounds(panArea.withSizeKeepingCentre(knobSize, knobSize));
 }

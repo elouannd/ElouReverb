@@ -291,46 +291,46 @@ juce::AudioProcessorValueTreeState::ParameterLayout ElouReverbAudioProcessor::cr
     // Room Size parameter
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID("roomSize", 1),      // parameter ID with version hint
-        "Decay Time",                         // parameter name
-        0.1f,                                 // minimum value
-        25.0f,                                // maximum value (changed from 90.0f)
-        8.0f                                  // default value
+        "Decay Time",                          // parameter name
+        0.1f,                                  // minimum value
+        25.0f,                                 // maximum value
+        8.0f                                   // default value
     ));
     
     // Damping parameter
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID("damping", 1),       // parameter ID with version hint
-        "Damping",                            // parameter name
-        0.0f,                                 // minimum value
-        1.0f,                                 // maximum value
-        0.5f                                  // default value
+        "Damping",                             // parameter name
+        0.0f,                                  // minimum value
+        1.0f,                                  // maximum value
+        0.5f                                   // default value
     ));
         
     // Mix parameter
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID("mix", 1),           // parameter ID with version hint
-        "Mix (Wet/Dry)",                      // parameter name
-        0.0f,                                 // minimum value
-        1.0f,                                 // maximum value
-        0.33f                                 // default value
+        "Mix (Wet/Dry)",                       // parameter name
+        0.0f,                                  // minimum value
+        1.0f,                                  // maximum value
+        0.33f                                  // default value
     ));
         
     // Saturation parameter
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID("saturation", 1),    // parameter ID with version hint
-        "Warmth",                             // parameter name
-        0.0f,                                 // minimum value
-        0.5f,                                 // maximum value
-        0.2f                                  // default value
+        "Warmth",                              // parameter name
+        0.0f,                                  // minimum value
+        0.5f,                                  // maximum value
+        0.2f                                   // default value
     ));
         
     // Pan parameter
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID("pan", 1),           // parameter ID with version hint
-        "Pan",                                // parameter name
-        -1.0f,                                // minimum value
-        1.0f,                                 // maximum value
-        0.0f                                  // default value
+        "Pan",                                 // parameter name
+        -1.0f,                                 // minimum value
+        1.0f,                                  // maximum value
+        0.0f                                   // default value
     ));
     
     return layout;
