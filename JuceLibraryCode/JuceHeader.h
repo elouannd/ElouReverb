@@ -47,9 +47,9 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "ElouReverb";
+    const char* const  projectName    = "ElouReverbV3";
     const char* const  companyName    = "Elouann";
-    const char* const  versionString  = "1.0";
-    const int          versionNumber  = 0x10000;
+    const char* const  versionString  = "3.0";
+    const int          versionNumber  = 0x30000;
 }
 #endif
