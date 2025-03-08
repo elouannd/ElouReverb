@@ -123,8 +123,8 @@
 		86380084E6329E9686C28447 /* Foundation.framework */ /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		86A11A2E847A8C99BF1C63E4 /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
 		8C42600048856CDDC41C4837 /* PluginProcessor.h */ /* PluginProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginProcessor.h; path = ../../Source/PluginProcessor.h; sourceTree = SOURCE_ROOT; };
-		904BF02BA5609AE01F6A3F51 /* knob.png */ /* knob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = knob.png; path = ../../knob.png; sourceTree = SOURCE_ROOT; };
 		96CDDE3C942CE711D0A3F578 /* include_juce_graphics_Harfbuzz.cpp */ /* include_juce_graphics_Harfbuzz.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_graphics_Harfbuzz.cpp; path = ../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp; sourceTree = SOURCE_ROOT; };
+		98B3017DCEDDE83BF9F5AD80 /* background.png */ /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = ../../Source/background.png; sourceTree = SOURCE_ROOT; };
 		9A26A8B235F435CC8A2B1C31 /* AppConfig.h */ /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
 		9B5B62742D98A5472C0E2213 /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
 		A08ECE34BB9543A6C4A63E3E /* juce_box2d */ /* juce_box2d */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_box2d; path = "~/JUCE/modules/juce_box2d"; sourceTree = "<absolute>"; };
@@ -166,6 +166,7 @@
 		F17BF469B658CCDCA58B52B7 /* Standalone Plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ElouReverb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2DDC27BFE3327C776674C1 /* Cocoa.framework */ /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FEAD2ED02746AD5C7767E164 /* VST3 */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElouReverb.vst3; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB05EEB3F09595571550D2B /* knob.png */ /* knob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = knob.png; path = ../../Source/knob.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,8 +417,9 @@
 			children = (
 				D54376136F3CDCFB82724399,
 				8C42600048856CDDC41C4837,
-				904BF02BA5609AE01F6A3F51,
 				131D2367914152CE031FD01F,
+				98B3017DCEDDE83BF9F5AD80,
+				FFB05EEB3F09595571550D2B,
 				5F031A6B6E079AA920547A14,
 			);
 			name = Source;
@@ -961,16 +963,16 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
 				SKIP_INSTALL = YES;
@@ -1059,9 +1061,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1069,7 +1071,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
 				SKIP_INSTALL = YES;
@@ -1110,9 +1112,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1123,7 +1125,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
@@ -1165,9 +1167,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1177,7 +1179,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
@@ -1219,9 +1221,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1229,7 +1231,7 @@
 				INFOPLIST_FILE = Info-VST3_Manifest_Helper.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "juce_vst3_helper";
 				USE_HEADERMAP = NO;
@@ -1269,9 +1271,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1282,7 +1284,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
@@ -1323,9 +1325,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1333,7 +1335,7 @@
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
@@ -1431,9 +1433,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1444,7 +1446,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
@@ -1487,9 +1489,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1499,7 +1501,7 @@
 				INSTALL_PATH = "/Library/Application Support/Avid/Audio/Plug-Ins/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
@@ -1540,9 +1542,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1551,7 +1553,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "juce_vst3_helper";
 				USE_HEADERMAP = NO;
@@ -1598,9 +1600,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1609,7 +1611,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";
@@ -1650,9 +1652,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces",
-					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces",
+					"$(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF",
 					"$(HOME)/JUCE/modules",
 					"$(HOME)/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
@@ -1662,7 +1664,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces $(HOME)/JUCE/modules/juce_audio_plugin_client/AAX/SDK/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1 $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces $(SRCROOT)/../../../../Downloads/aax-sdk-2-8-1/Interfaces/ACF $(HOME)/JUCE/modules $(HOME)/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lElouReverb";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Elouann.ElouReverbV3;
 				PRODUCT_NAME = "ElouReverb";

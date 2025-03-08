@@ -10,9 +10,10 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="lZ4nB2" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="hQj5bR" name="knob.png" compile="0" resource="1" file="knob.png"/>
       <FILE id="irG0DB" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
+      <FILE id="WOE3No" name="background.png" compile="0" resource="1" file="Source/background.png"/>
+      <FILE id="lycipw" name="knob.png" compile="0" resource="1" file="Source/knob.png"/>
       <FILE id="T2XtBq" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
@@ -38,7 +39,7 @@
   </MODULES>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1" aaxFolder="../../Downloads/aax-sdk-2-8-1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ElouReverb"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="ElouReverb"/>

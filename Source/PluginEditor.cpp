@@ -13,6 +13,10 @@
 ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    // Load the images from binary resources instead of files
+    knobImage = juce::ImageCache::getFromMemory(BinaryData::knob_png, BinaryData::knob_pngSize);
+    backgroundImage = juce::ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
+
     // Set up all sliders
     setupSlider(roomSizeSlider, 0.1f, 25.0f, 0.01f, " s");
     roomSizeSlider.setName("roomSize");
@@ -52,8 +56,10 @@ ElouReverbAudioProcessorEditor::ElouReverbAudioProcessorEditor (ElouReverbAudioP
     };
     
     colorLabel.setText("Couleur:", juce::dontSendNotification);
-    colorLabel.setFont(juce::Font(14.0f));
+    colorLabel.setFont(juce::Font(14.0f, juce::Font::bold));
     colorLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    colorLabel.setColour(juce::Label::outlineColourId, juce::Colours::black);
+    colorLabel.setColour(juce::Label::backgroundColourId, juce::Colours::black.withAlpha(0.3f));
     addAndMakeVisible(colorLabel);
     
     for (const auto& [name, color] : colors)
@@ -104,6 +110,12 @@ void ElouReverbAudioProcessorEditor::setupSlider(juce::Slider& slider, float min
     if (suffix && suffix[0] != '\0')
         slider.setTextValueSuffix(suffix);
         
+    // Add text outline effect
+    slider.setColour(juce::Slider::textBoxTextColourId, juce::Colours::white);
+    slider.setColour(juce::Slider::textBoxBackgroundColourId, juce::Colours::black.withAlpha(0.6f));
+    slider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::black);
+    slider.setColour(juce::Slider::textBoxHighlightColourId, juce::Colours::white.withAlpha(0.2f));
+        
     slider.setLookAndFeel(&knobLookAndFeel);
     addAndMakeVisible(slider);
 }
@@ -114,6 +126,9 @@ void ElouReverbAudioProcessorEditor::setupLabel(juce::Label& label, const juce::
     label.setJustificationType(juce::Justification::centred);
     label.setFont(juce::Font(16.0f, juce::Font::bold));
     label.setColour(juce::Label::textColourId, juce::Colours::white);
+    // Add a dark outline effect
+    label.setColour(juce::Label::textWhenEditingColourId, juce::Colours::white);
+    label.setColour(juce::Label::outlineWhenEditingColourId, juce::Colours::black);
     addAndMakeVisible(label);
 }
 
@@ -122,36 +137,58 @@ void ElouReverbAudioProcessorEditor::setupLabel(juce::Label& label, const juce::
 
 void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    // Get current knob color for theming
+    // Get the theme color first
     juce::Colour mainThemeColor = knobLookAndFeel.getMainColour();
-    juce::Colour darkThemeColor = mainThemeColor.withBrightness(0.2f);
     
-    // Main gradient background using the theme color
-    juce::ColourGradient backgroundGradient(
-        darkThemeColor, 0, 0,  
-        darkThemeColor.darker(0.7f), getWidth(), getHeight(),  
-        true
-    );
-    g.setGradientFill(backgroundGradient);
-    g.fillAll();
-    
-    // Plugin title with Valhalla style
+    if (easterEggMode && backgroundImage.isValid()) {
+        // Draw the custom background image
+        g.drawImage(backgroundImage, getLocalBounds().toFloat());
+    } else {
+        // Original background drawing
+        juce::Colour darkThemeColor = mainThemeColor.withBrightness(0.2f);
+        
+        juce::ColourGradient backgroundGradient(
+            darkThemeColor, 0, 0,  
+            darkThemeColor.darker(0.7f), getWidth(), getHeight(),  
+            true
+        );
+        g.setGradientFill(backgroundGradient);
+        g.fillAll();
+    }
+
+    // Function to draw outlined text
+    auto drawOutlinedText = [&](const juce::String& text, int x, int y, int width, int height, 
+                               juce::Justification justification, const juce::Colour& textColor) {
+        // Draw text outline/shadow
+        g.setColour(juce::Colours::black);
+        float outlineThickness = 1.5f;
+        for (float xOffset = -outlineThickness; xOffset <= outlineThickness; xOffset += outlineThickness) {
+            for (float yOffset = -outlineThickness; yOffset <= outlineThickness; yOffset += outlineThickness) {
+                g.drawText(text, x + xOffset, y + yOffset, width, height, justification, true);
+            }
+        }
+        // Draw main text
+        g.setColour(textColor);
+        g.drawText(text, x, y, width, height, justification, true);
+    };
+
+    // Plugin title
     g.setFont(juce::Font(36.0f, juce::Font::bold));
+    if (easterEggMode) {
+        drawOutlinedText("Ryan", 20, 20, 100, 40, juce::Justification::left, mainThemeColor);
+        drawOutlinedText("Gosling Reverb", 120, 20, 250, 40, juce::Justification::left, mainThemeColor.darker(0.3f));
+    } else {
+        drawOutlinedText("Elou", 20, 20, 100, 40, juce::Justification::left, mainThemeColor);
+        drawOutlinedText("Reverb", 120, 20, 150, 40, juce::Justification::left, mainThemeColor.darker(0.3f));
+    }
     
-    // "Elou" in theme color
-    g.setColour(mainThemeColor);
-    g.drawText("Elou", 20, 20, 100, 40, juce::Justification::left, true);
-    
-    // "Reverb" in darker theme color
-    g.setColour(mainThemeColor.darker(0.3f));
-    g.drawText("Reverb", 120, 20, 150, 40, juce::Justification::left, true);
-    
-    // Version and credit
-    g.setColour(juce::Colours::white.withAlpha(0.6f));
+    // Version and credit with outline
     g.setFont(juce::Font(12.0f));
-    g.drawText("V3 - Elouann 2025", 
-              getWidth() - 200, 25, 
-              180, 20, juce::Justification::right, true);
+    drawOutlinedText("V3 - Elouann 2025", 
+                     getWidth() - 200, 25, 
+                     180, 20, 
+                     juce::Justification::right, 
+                     juce::Colours::white.withAlpha(0.6f));
               
     // Draw sections with borders using theme color
     auto drawSection = [&](juce::Rectangle<int> bounds, const juce::String& title) {
@@ -159,9 +196,11 @@ void ElouReverbAudioProcessorEditor::paint(juce::Graphics& g)
         g.drawRoundedRectangle(bounds.toFloat(), 10.0f, 2.0f);
         
         g.setFont(juce::Font(18.0f, juce::Font::bold));
-        g.setColour(juce::Colours::white);
-        g.drawText(title, bounds.getX(), bounds.getY() - 25, bounds.getWidth(), 20, 
-                  juce::Justification::centred, true);
+        drawOutlinedText(title, 
+                        bounds.getX(), bounds.getY() - 25, 
+                        bounds.getWidth(), 20, 
+                        juce::Justification::centred, 
+                        juce::Colours::white);
     };
     
     // Main sections
@@ -245,5 +284,33 @@ void ElouReverbAudioProcessorEditor::buttonClicked(juce::Button* button)
     {
         knobLookAndFeel.setMainColour(colorBtn->getColour());
         repaint();
+    }
+}
+
+void ElouReverbAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
+{
+    // Check if click is in title area
+    if (event.y < 80 && event.x < 270)  // Title area dimensions
+    {
+        if (easterEggMode) {
+            // If already in easter egg mode, switch back to normal mode
+            easterEggMode = false;
+            titleClickCount = 0;
+            // Disable easter egg mode for knobs
+            knobLookAndFeel.setEasterEggMode(false, knobImage);
+            // Force a repaint to show the changes
+            repaint();
+        } else {
+            // Normal easter egg activation logic
+            titleClickCount++;
+            if (titleClickCount >= 10)
+            {
+                easterEggMode = true;
+                // Enable easter egg mode for knobs
+                knobLookAndFeel.setEasterEggMode(true, knobImage);
+                // Force a repaint to show the changes
+                repaint();
+            }
+        }
     }
 }

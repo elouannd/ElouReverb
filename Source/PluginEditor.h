@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "BinaryData.h"
 
 // Update the KnobLookAndFeel class with analog console knob design:
 
@@ -33,10 +34,36 @@ public:
         return mainColour;
     }
     
+    void setEasterEggMode(bool mode, const juce::Image& knobImg) {
+        easterEggMode = mode;
+        knobImage = knobImg;
+    }
+    
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
                           float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override
     {
-        // Dimensions de base
+        if (easterEggMode && knobImage.isValid()) {
+            // Draw the custom knob image with rotation
+            const float centerX = x + width * 0.5f;
+            const float centerY = y + height * 0.5f;
+            const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+            
+            const float radius = juce::jmin(width, height) * 0.4f;
+            const float imageSize = radius * 2.0f;
+            
+            g.addTransform(juce::AffineTransform::rotation(angle, centerX, centerY));
+            g.drawImage(knobImage, 
+                       centerX - radius, 
+                       centerY - radius, 
+                       imageSize, 
+                       imageSize, 
+                       0, 0, 
+                       knobImage.getWidth(), 
+                       knobImage.getHeight());
+            return;
+        }
+
+        // Original knob drawing code for non-easter egg mode
         float radius;
         if (slider.getName() == "roomSize") {
             radius = juce::jmin(width, height) * 0.45f; // Plus grand pour le decay
@@ -69,6 +96,8 @@ public:
 
 private:
     juce::Colour mainColour;
+    bool easterEggMode = false;
+    juce::Image knobImage;
 };
 
 class ColorButton : public juce::TextButton
@@ -113,11 +142,18 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void buttonClicked(juce::Button* button) override;
+    void mouseDown(const juce::MouseEvent& event) override;
 
 private:
     void setupSlider(juce::Slider& slider, float min, float max, float step, const char* suffix = "");
     void setupLabel(juce::Label& label, const juce::String& text);
     void createAttachments();
+    
+    // Easter egg properties
+    int titleClickCount = 0;
+    bool easterEggMode = false;
+    juce::Image knobImage;
+    juce::Image backgroundImage;
 
     ElouReverbAudioProcessor& audioProcessor;
 
